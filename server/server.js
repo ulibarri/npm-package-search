@@ -1,10 +1,10 @@
-let fs = require("fs");
-let api = require("api-npm");
-let express = require("express");
-let bodyParser = require("body-parser");
-let pack = require("./models/pack");
-let path = require("path");
-
+const fs = require("fs");
+const api = require("api-npm");
+const express = require("express");
+const bodyParser = require("body-parser");
+const pack = require("./models/pack");
+const path = require("path");
+const port = process.env.PORT || 3000;
 let myPack = new pack();
 let app = express();
 
@@ -38,9 +38,6 @@ app.post("/npmpack", (req, res) => {
 
 app.post("/save", (req, res) => {
   let bod = req.body;
-  // let datos = req.body;
-  // console.log(datos[0][0].toString());
-  //res.end(datos[0].name.toString());
   var bodKeys = Object.keys(bod);
   bodKeys.forEach(function(packs) {
     var items = Object.keys(bod[packs]);
@@ -95,7 +92,7 @@ app.get("/packs/:id", (req, res) => {
 });
 
 if (!module.parent) {
-  app.listen(3000, () => {
-    console.log("server listening on port 3000");
+  app.listen(port, () => {
+    console.log(`server listening on port ${port}`);
   });
 }
