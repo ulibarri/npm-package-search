@@ -91,7 +91,7 @@ app.get("/packs/:id", (req, res) => {
 });
 
 if (!module.parent) {
-  app.listen(port, () => {
-    console.log(`server listening on port ${port}`);
+  app.listen(3000, () => {
+    console.log(`server listening on port 3000`);
   });
 }

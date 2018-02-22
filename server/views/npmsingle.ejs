@@ -9,6 +9,9 @@
     <p>
         <a href="/packs">NPM packages in database</a>
     </p>
+    <p>
+        <a href="/">Search NPM packages</a>
+    </p>
     <table border="1" cellpadding="7" cellspacing="7">
         <tr>
             <th>Version</th>
@@ -63,7 +66,7 @@
                     "homepage": h
                 });
             }
-            console.log(JSON.stringify(results, undefined, 2));
+            //console.log(JSON.stringify(results, undefined, 2));
             $.ajax({
                 type: 'POST',
                 data: JSON.stringify(({ results })),
