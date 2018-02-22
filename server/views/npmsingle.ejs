@@ -1,0 +1,72 @@
+<html>
+
+<body>
+    <h1>
+        Package name:
+        <%= data.name %>
+    </h1>
+    <form action="/save" method="POST"></form>
+    <p>
+        <a href="/packs">NPM packages in database</a>
+    </p>
+    <table border="1" cellpadding="7" cellspacing="7">
+        <tr>
+            <th>version</th>
+            <th>description</th>
+            <th>_id</th>
+        </tr>
+        <tr>
+            <td>
+                <%=data.version%>
+            </td>
+            <td>
+                <%=data.description%>
+            </td>
+            <td>
+                <%=data.name%>
+            </td>
+            <td>
+                <input type="checkbox" id="chk1" data-version="<%=data.version%>" data-pname="<%=data.name%>" data-description="<%=data.description%>">
+            </td>
+        </tr>
+    </table>
+    <br>
+    <br>
+    </div>
+    <input type="submit" value="Save to DB" id="btnSave">
+    </form>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript"></script>
+    <script>
+        document.getElementById("btnSave").addEventListener("click", function () {
+            const checks = Array.from(document.querySelectorAll('input[type="checkbox"]'))
+                .filter((checkbox) => checkbox.checked)
+                .map((checkbox) => checkbox.getAttribute('data-pname') + "+" + checkbox.getAttribute('data-version') + "+" + checkbox.getAttribute('data-description'));
+            let results = [];
+            for (let s of checks) {
+                let tokens = [];
+                tokens = s.split("+");
+                let n = tokens[0];
+                let v = tokens[1];
+                let d = tokens[2];
+                results.push({
+                    "name": n,
+                    "version": v,
+                    "description": d
+                });
+            }
+            console.log(JSON.stringify(results, undefined, 2));
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(({ results })),
+                contentType: 'application/json',
+                url: '/save',
+                success: function (data) {
+                    // console.log('success');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

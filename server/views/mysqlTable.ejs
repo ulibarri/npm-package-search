@@ -1,0 +1,74 @@
+<html>
+
+<body>
+    <h1>
+        Data base Packages
+    </h1>
+    <form action="/delete" method="POST">
+        <p>
+            <a href="/">Search NPM packages</a>
+        </p>
+        <table border="1" cellpadding="7" cellspacing="7" id="results">
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>version</th>
+                <th>description</th>
+                <th>Delete from db</th>
+            </tr>
+            <% if(data.length){ 
+        for(var i = 0;i < data.length;i++) { %>
+                <tr>
+                    <td>
+                        <%=data[i].id%>
+                    </td>
+                    <td>
+                        <%=data[i].name%>
+                    </td>
+                    <td>
+                        <%=data[i].version%>
+                    </td>
+                    <td>
+                        <%=data[i].description%>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="chk<%= i %>" data-id="<%=data[i].id%>">
+                    </td>
+                </tr>
+                <% }
+      }else{ %>
+                    <tr>
+                        <td colspan="3 ">No results</td>
+                    </tr>
+                    <% } %>
+        </table>
+        <br>
+        <br>
+        </div>
+        <input type="submit" value="Delete from DB" id="btnDelete">
+    </form>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript"></script>
+    <script>
+        document.getElementById("btnDelete").addEventListener("click", function () {
+            const checks = Array.from(document.querySelectorAll('input[type="checkbox"]'))
+                .filter((checkbox) => checkbox.checked)
+                .map((checkbox) => checkbox.getAttribute('data-id'));
+
+            console.log(checks);
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(({ checks })),
+                contentType: 'application/json',
+                // data: checks,
+                url: '/delete',
+                success: function (data) {
+                    console.log('success');
+                }
+            });
+        });
+    </script>
+</body>
+
+
+</html>
