@@ -2,7 +2,7 @@
 
 <body>
     <h1>
-        Data base Packages
+        mySql Database Packages
     </h1>
     <form action="/delete" method="POST">
         <p>
@@ -11,9 +11,11 @@
         <table border="1" cellpadding="7" cellspacing="7" id="results">
             <tr>
                 <th>id</th>
-                <th>name</th>
-                <th>version</th>
-                <th>description</th>
+                <th>Name</th>
+                <th>Version</th>
+                <th>Description</th>
+                <th>Home</th>
+                <th>Created</th>
                 <th>Delete from db</th>
             </tr>
             <% if(data.length){ 
@@ -30,6 +32,12 @@
                     </td>
                     <td>
                         <%=data[i].description%>
+                    </td>
+                    <td>
+                        <%=data[i].homepage%>
+                    </td>
+                    <td>
+                        <%=data[i].created%>
                     </td>
                     <td>
                         <input type="checkbox" id="chk<%= i %>" data-id="<%=data[i].id%>">
@@ -54,16 +62,13 @@
             const checks = Array.from(document.querySelectorAll('input[type="checkbox"]'))
                 .filter((checkbox) => checkbox.checked)
                 .map((checkbox) => checkbox.getAttribute('data-id'));
-
-            console.log(checks);
             $.ajax({
                 type: 'POST',
                 data: JSON.stringify(({ checks })),
                 contentType: 'application/json',
-                // data: checks,
                 url: '/delete',
                 success: function (data) {
-                    console.log('success');
+                    // console.log('success');
                 }
             });
         });

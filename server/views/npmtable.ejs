@@ -11,10 +11,11 @@
         </p>
         <table border="1" cellpadding="7" cellspacing="7" id="results">
             <tr>
-                <th>version</th>
-                <th>description</th>
+                <th>Version</th>
+                <th>Description</th>
                 <th>_id</th>
-                <th>add to db</th>
+                <th>Homepage</th>
+                <th>Add to db</th>
             </tr>
             <% if(data.length){ 
         for(var i = 0;i < data.length;i++) { %>
@@ -29,7 +30,11 @@
                         <%=details.name%>
                     </td>
                     <td>
-                        <input type="checkbox" id="chk<%= i %>" data-version="<%=data[i].version%>" data-pname="<%=details.name%>" data-description="<%=data[i].description%>">
+                        <%=data[i].homepage%>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="chk<%= i %>" data-version="<%=data[i].version%>" data-pname="<%=details.name%>" data-description="<%=data[i].description%>"
+                            data-home="<%=data[i].homepage%>">
                     </td>
                 </tr>
                 <% }
@@ -50,7 +55,7 @@
         document.getElementById("btnSave").addEventListener("click", function () {
             const checks = Array.from(document.querySelectorAll('input[type="checkbox"]'))
                 .filter((checkbox) => checkbox.checked)
-                .map((checkbox) => checkbox.getAttribute('data-pname') + "+" + checkbox.getAttribute('data-version') + "+" + checkbox.getAttribute('data-description'));
+                .map((checkbox) => checkbox.getAttribute('data-pname') + "+" + checkbox.getAttribute('data-version') + "+" + checkbox.getAttribute('data-description') + "+" + checkbox.getAttribute('data-home'));
             let results = [];
             for (let s of checks) {
                 let tokens = [];
@@ -58,13 +63,14 @@
                 let n = tokens[0];
                 let v = tokens[1];
                 let d = tokens[2];
+                let h = tokens[3];
                 results.push({
                     "name": n,
                     "version": v,
-                    "description": d
+                    "description": d,
+                    "homepage": h
                 });
             }
-            // console.log(JSON.stringify(results, undefined, 2));
             $.ajax({
                 type: 'POST',
                 data: JSON.stringify(({ results })),

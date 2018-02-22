@@ -11,9 +11,11 @@
     </p>
     <table border="1" cellpadding="7" cellspacing="7">
         <tr>
-            <th>version</th>
-            <th>description</th>
+            <th>Version</th>
+            <th>Description</th>
             <th>_id</th>
+            <th>Homepage</th>
+            <th>Add to db</th>
         </tr>
         <tr>
             <td>
@@ -26,7 +28,11 @@
                 <%=data.name%>
             </td>
             <td>
-                <input type="checkbox" id="chk1" data-version="<%=data.version%>" data-pname="<%=data.name%>" data-description="<%=data.description%>">
+                <%=details.homepage%>
+            </td>
+            <td>
+                <input type="checkbox" id="chk1" data-version="<%=data.version%>" data-pname="<%=data.name%>" data-description="<%=data.description%>"
+                    data-home="<%=details.homepage%>">
             </td>
         </tr>
     </table>
@@ -41,7 +47,7 @@
         document.getElementById("btnSave").addEventListener("click", function () {
             const checks = Array.from(document.querySelectorAll('input[type="checkbox"]'))
                 .filter((checkbox) => checkbox.checked)
-                .map((checkbox) => checkbox.getAttribute('data-pname') + "+" + checkbox.getAttribute('data-version') + "+" + checkbox.getAttribute('data-description'));
+                .map((checkbox) => checkbox.getAttribute('data-pname') + "+" + checkbox.getAttribute('data-version') + "+" + checkbox.getAttribute('data-description') + "+" + checkbox.getAttribute('data-home'));
             let results = [];
             for (let s of checks) {
                 let tokens = [];
@@ -49,10 +55,12 @@
                 let n = tokens[0];
                 let v = tokens[1];
                 let d = tokens[2];
+                let h = tokens[3];
                 results.push({
                     "name": n,
                     "version": v,
-                    "description": d
+                    "description": d,
+                    "homepage": h
                 });
             }
             console.log(JSON.stringify(results, undefined, 2));

@@ -38,11 +38,11 @@ app.post("/npmpack", (req, res) => {
 
 app.post("/save", (req, res) => {
   let bod = req.body;
-  var bodKeys = Object.keys(bod);
+  let bodKeys = Object.keys(bod);
   bodKeys.forEach(function(packs) {
-    var items = Object.keys(bod[packs]);
+    let items = Object.keys(bod[packs]);
     items.forEach(function(item) {
-      var value = bod[packs][item];
+      let value = bod[packs][item];
       if (value.name != "null") {
         let newPack = new pack(value);
         newPack.save();
@@ -64,12 +64,11 @@ app.get("/packs", (req, res) => {
 
 app.post("/delete", (req, res) => {
   let bod = req.body;
-
-  var bodKeys = Object.keys(bod);
+  let bodKeys = Object.keys(bod);
   bodKeys.forEach(function(packs) {
-    var items = Object.keys(bod[packs]);
+    let items = Object.keys(bod[packs]);
     items.forEach(function(item) {
-      var value = bod[packs][item];
+      let value = bod[packs][item];
       if (value.name != "null") {
         let newPack = new pack();
         newPack.set("id", value);
